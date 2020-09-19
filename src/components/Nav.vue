@@ -2,9 +2,9 @@
   nav.navbar.is-light(role="navigation")
     .navbar-brand
       a.navbar-item 듀링 도서관
-      .navbar-burger(@click="active=!active" :class="{'is-active':active}")
+      .navbar-burger(@click="active = !active" :class="{ 'is-active': active} ")
         span(v-for="n in 3")
-    .navbar-menu(:class="{'is-active':active}")
+    .navbar-menu(:class="{ 'is-active': active }")
       .navbar-start
         a.navbar-item 자유 게시판
         a.navbar-item 듀얼킹달성 덱리스트
