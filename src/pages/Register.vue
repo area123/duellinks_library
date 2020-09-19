@@ -1,20 +1,17 @@
 <template lang="pug">
   div
     Nav
-    LoginForm
+    RegisterForm
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Nav from '@/components/Nav.vue';
-import LoginForm from '@/components/LoginForm.vue';
+import RegisterForm from '@/components/RegisterForm.vue';
+
 
 export default Vue.extend({
-  data() {
-    return {};
-  },
-
-  components: { Nav, LoginForm },
+  components: { Nav, RegisterForm },
 });
 </script>
 

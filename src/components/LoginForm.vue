@@ -1,5 +1,5 @@
 <template lang="pug">
-  section.hero(:class="classObject")
+  section.hero.is-fullheight-with-navbar
     .hero-body
       .container.has-text-centered
         .column.is-4.is-offset-4
@@ -14,7 +14,7 @@
                   input.input.is-large.is-primary(v-model="password" type="password" placeholder="비밀번호를 입력해주세요")
               button.button.is-primary.is-large.is-fullwidth.is-outlined 로그인
           p.has-text-primary
-            a 회원가입 &nbsp;·&nbsp;
+            router-link(:to="{ name: 'register' }") 회원가입 &nbsp;·&nbsp;
             a 비밀번호 찾기
 </template>
 
@@ -27,16 +27,6 @@ export default Vue.extend({
       email: '',
       password: '',
     };
-  },
-  props: ['is-nav'],
-  computed: {
-    classObject: function() {
-      const is_nav = this.$props.isNav;
-      return {
-        'is-fullheight': !is_nav,
-        'is-fullheight-with-navbar': is_nav,
-      };
-    },
   },
 });
 </script>

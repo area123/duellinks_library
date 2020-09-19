@@ -1,7 +1,7 @@
 <template lang="pug">
   nav.navbar.is-light(role="navigation")
     .navbar-brand
-      a.navbar-item 듀링 도서관
+      router-link.navbar-item(:to="{ name: 'home' }") 듀링 도서관
       .navbar-burger(@click="active = !active" :class="{ 'is-active': active} ")
         span(v-for="n in 3")
     .navbar-menu(:class="{ 'is-active': active }")
@@ -12,9 +12,9 @@
         a.navbar-item 카드 평가
       .navbar-end
         .buttons
-          a.button.is-primary.is-outlined
+          router-link.button.is-primary.is-outlined(:to="{ name: 'register' }")
             strong 회원가입
-          a.button.is-primary.is-outlined
+          router-link.button.is-primary.is-outlined(:to="{ name: 'login' }")
             strong 로그인
 </template>
 
