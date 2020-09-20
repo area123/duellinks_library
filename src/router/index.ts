@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '@/pages/Home.vue';
 import Login from '@/pages/Login.vue';
 import Register from '@/pages/Register.vue';
+import PostList from '@/pages/PostList.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes: RouteConfig[] = [
     path: '/register',
     name: 'register',
     component: Register,
+  },
+  {
+    path: '/post',
+    name: 'postlist',
+    component: PostList,
   },
 ];
 
