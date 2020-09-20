@@ -4,6 +4,7 @@ import Home from '@/pages/Home.vue';
 import Login from '@/pages/Login.vue';
 import Register from '@/pages/Register.vue';
 import PostList from '@/pages/PostList.vue';
+import Post from '@/pages/Post.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes: RouteConfig[] = [
     path: '/post',
     name: 'postlist',
     component: PostList,
+  },
+  {
+    path: '/post/:postId',
+    name: 'post',
+    component: Post,
   },
 ];
 

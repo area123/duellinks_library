@@ -1,19 +1,18 @@
 <template lang="pug">
   div
     Nav
-    PostTable
-    Footer
+    PostCard
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Nav from '@/components/Nav.vue';
-import PostTable from '@/components/PostTable.vue';
-import Footer from '@/components/Footer.vue';
+import PostCard from '@/components/PostCard.vue';
+
 
 export default Vue.extend({
-  name: 'PostList',
-  components: { Nav, PostTable, Footer },
+  name: 'Post',
+  components: { Nav, PostCard },
 });
 </script>
 
