@@ -39,6 +39,7 @@ import {
   BulletList,
   OrderedList,
 } from 'tiptap-extensions';
+import { Command } from 'tiptap-commands';
 
 export default Vue.extend({
   name: 'Editor',
@@ -61,7 +62,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    showImagePropmpt(command) {
+    showImagePropmpt(command: Command) {
       const src = prompt('이미지 URL을 입력해 주세요');
       if (src !== null) {
         command({ src });

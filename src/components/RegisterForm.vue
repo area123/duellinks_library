@@ -42,7 +42,7 @@ export default Vue.extend({
   },
   methods: {
     onSubmit: function() {
-      const data: JSON = {
+      const data: Object = {
         email: this.email,
         password: this.password,
         nickname: this.nickname,

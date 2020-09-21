@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const register = async (data: JSON) => {
+export const register = async (data: Object) => {
   try {
     const response = await axios.post('/api/auth/register', data);
 
@@ -10,7 +10,7 @@ export const register = async (data: JSON) => {
   }
 };
 
-export const login = async (data: JSON) => {
+export const login = async (data: Object) => {
   try {
     const response = await axios.post('/api/auth/login', data);
 
