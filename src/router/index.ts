@@ -5,6 +5,7 @@ import Login from '@/pages/Login.vue';
 import Register from '@/pages/Register.vue';
 import PostList from '@/pages/PostList.vue';
 import Post from '@/pages/Post.vue';
+import Writer from '@/pages/Writer.vue';
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,11 @@ const routes: RouteConfig[] = [
     path: '/register',
     name: 'register',
     component: Register,
+  },
+  {
+    path: '/write',
+    name: 'write',
+    component: Writer,
   },
   {
     path: '/post',

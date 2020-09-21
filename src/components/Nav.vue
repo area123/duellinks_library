@@ -12,10 +12,16 @@
         a.navbar-item 카드 평가
       .navbar-end
         .buttons
-          router-link.button.is-primary.is-outlined(:to="{ name: 'register' }")
-            strong 회원가입
-          router-link.button.is-primary.is-outlined(:to="{ name: 'login' }")
-            strong 로그인
+          template(v-if="login")
+            router-link.button.is-primary.is-outlined(:to="{ name: 'register' }")
+              strong 회원가입
+            router-link.button.is-primary.is-outlined(:to="{ name: 'login' }")
+              strong 로그인
+          template(v-else)
+            button.button.is-primary.is-outlined(@click="onClick")
+              strong 로그아웃
+            router-link.button.is-primary.is-outlined(:to="{ name: 'writer' }")
+              strong 글쓰기
 </template>
 
 <script lang="ts">
@@ -26,7 +32,17 @@ export default Vue.extend({
   data() {
     return {
       active: false,
+      login: false,
     };
+  },
+  methods: {
+    onClick() {
+      this.$store.dispatch('user/logout');
+      this.login = this.$store.state['user/user'] !== null;
+    },
+  },
+  mounted() {
+    this.login = this.$store.state['user/user'] !== null;
   },
 });
 </script>

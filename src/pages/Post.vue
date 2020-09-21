@@ -17,7 +17,7 @@ export default Vue.extend({
   name: 'Post',
   components: { Nav, PostCard, Pagination, Footer },
 });
-</script>
+</script>성
 
 <style scoped>
 

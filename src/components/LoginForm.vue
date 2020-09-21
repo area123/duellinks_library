@@ -4,7 +4,7 @@
       .container.has-text-centered
         .column.is-4.is-offset-4
           .box
-            form
+            form(@submit.prevent="onSubmit")
               h3.title.has-text-black 로그인
               .field
                 .control
@@ -27,6 +27,18 @@ export default Vue.extend({
       email: '',
       password: '',
     };
+  },
+  methods: {
+    onSubmit() {
+      const data: JSON = {
+        email: this.email,
+        password: this.password,
+      };
+      this.$store.dispatch('user/login', data);
+      if (this.$store.state['user/user'] !== null) {
+        this.$router.push({ name: 'home' });
+      }
+    },
   },
 });
 </script>

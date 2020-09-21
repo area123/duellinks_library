@@ -4,6 +4,4 @@
 
 <style lang="scss">
 @import "~bulma/bulma";
-
-
 </style>

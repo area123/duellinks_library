@@ -10,12 +10,9 @@
                 .field-label.is-normal
                   label.label 이메일
                 .field-body
-                  .field.has-addons
-                    p.control.is-expanded
-                      input.input.is-primary(v-model="email" type="email" placeholder="이메일을 입력해주세요" required)
-                    .control
-                      button.button.is-primary.is-outlined(v-on:click.prevent="onSubmit") 아이디 확인
-              .field.is-horizontal
+                  .field
+                    p.control
+                      input.input.is-primary(v-model="email" type="email" placeholder="이메일을 입력해주세요" required)              .field.is-horizontal
                 .field-label.is-normal
                   label.label 비밀번호
                 .field-body
@@ -30,8 +27,6 @@
                     p.control
                       input.input.is-primary(v-model="nickname" type="text" placeholder="닉네임을 입력해주세요" required)
               button.button.is-primary.is-large.is-fullwidth.is-outlined 회원가입
-
-
 </template>
 
 <script lang="ts">
@@ -47,7 +42,12 @@ export default Vue.extend({
   },
   methods: {
     onSubmit: function() {
-      // TODO form 전송
+      const data: JSON = {
+        email: this.email,
+        password: this.password,
+        nickname: this.nickname,
+      };
+      this.$store.dispatch('user/register', data);
     },
   },
 });
