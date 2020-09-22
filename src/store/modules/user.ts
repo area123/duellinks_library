@@ -15,14 +15,15 @@ const user: Module<IUser, IRootState> = {
   },
   getters: {},
   actions: {
-    register({ commit }, data: JSON) {
+    async register({ commit }, data: JSON) {
       commit('set_user', register(data));
     },
-    login({ commit }, data: JSON) {
+    async login({ commit }, data: JSON) {
       commit('set_user', login(data));
     },
-    logout({ commit }) {
-      commit('set_user', logout());
+    async logout({ commit }) {
+      logout();
+      commit('set_user', null);
     },
   },
   mutations: {

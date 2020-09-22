@@ -12,7 +12,7 @@
         a.navbar-item 카드 평가
       .navbar-end
         .buttons
-          template(v-if="login")
+          template(v-if="!isLogin")
             router-link.button.is-primary.is-outlined(:to="{ name: 'register' }")
               strong 회원가입
             router-link.button.is-primary.is-outlined(:to="{ name: 'login' }")
@@ -32,17 +32,17 @@ export default Vue.extend({
   data() {
     return {
       active: false,
-      login: false,
     };
   },
   methods: {
     onClick() {
       this.$store.dispatch('user/logout');
-      this.login = this.$store.state['user/user'] !== null;
     },
   },
-  mounted() {
-    this.login = this.$store.state['user/user'] !== null;
+  computed: {
+    isLogin() {
+      return this.$store.state['user'].user !== null;
+    },
   },
 });
 </script>

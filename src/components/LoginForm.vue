@@ -35,7 +35,8 @@ export default Vue.extend({
         password: this.password,
       };
       this.$store.dispatch('user/login', data);
-      if (this.$store.state['user/user'] !== null) {
+      console.log(this.$store.state['user'].user);
+      if (this.$store.state['user'].user !== null) {
         this.$router.push({ name: 'home' });
       }
     },

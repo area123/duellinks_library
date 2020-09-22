@@ -12,7 +12,8 @@
                 .field-body
                   .field
                     p.control
-                      input.input.is-primary(v-model="email" type="email" placeholder="이메일을 입력해주세요" required)              .field.is-horizontal
+                      input.input.is-primary(v-model="email" type="email" placeholder="이메일을 입력해주세요" required)
+              .field.is-horizontal
                 .field-label.is-normal
                   label.label 비밀번호
                 .field-body
@@ -48,6 +49,9 @@ export default Vue.extend({
         nickname: this.nickname,
       };
       this.$store.dispatch('user/register', data);
+      if (this.$store.state['user'].user !== null) {
+        this.$router.push({ name: 'home' });
+      }
     },
   },
 });
