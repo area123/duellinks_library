@@ -1,41 +1,18 @@
-import axios from 'axios';
+import axios, { AxiosPromise } from 'axios';
+import { User, UserResponse, UserLoginForm } from '@/types/user';
 
-export const register = async (data: Object) => {
-  try {
-    const response = await axios.post('/api/auth/register', data);
-
-    return response.data;
-  } catch (e) {
-    console.log('이미 아이디가 존재 합니다.');
-  }
+export const register = (data: User): AxiosPromise<UserResponse> => {
+  return axios.post('/api/auth/register', data);
 };
 
-export const login = async (data: Object) => {
-  try {
-    const response = await axios.post('/api/auth/login', data);
-
-    return response.data;
-  } catch (e) {
-    console.log(e);
-  }
+export const login = (data: UserLoginForm): AxiosPromise<UserResponse> => {
+  return axios.post('/api/auth/login', data);
 };
 
-export const check = async () => {
-  try {
-    const response = await axios.get('/api/auth/check');
-    return response.data;
-  } catch (e) {
-    console.log(e);
-  }
+export const check = (): AxiosPromise<UserResponse> => {
+  return axios.get('/api/auth/check');
 };
 
 export const logout = async () => {
-  try {
-    const response = await axios.post('/api/auth/logout');
-    if (response.status === 204) {
-      return null;
-    }
-  } catch (e) {
-    console.log(e);
-  }
+  return axios.post('/api/auth/logout');
 };
