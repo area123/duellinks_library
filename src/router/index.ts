@@ -31,14 +31,14 @@ const routes: RouteConfig[] = [
     component: Writer,
   },
   {
-    path: '/post',
-    name: 'postlist',
-    component: PostList,
-  },
-  {
     path: '/post/:postId',
     name: 'post',
     component: Post,
+  },
+  {
+    path: '/:post',
+    name: 'postlist',
+    component: PostList,
   },
 ];
 

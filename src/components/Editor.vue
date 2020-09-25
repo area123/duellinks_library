@@ -1,7 +1,17 @@
 <template lang="pug">
   div
+    .field.is-horizontal.has-addons
+      .field-body
+        .control
+        input.input(type="text" placeholder="제목을 입력해주세요" v-model="title")
+        .control
+          p.control
+            span.select
+              select(v-model="sort")
+                option(selected) {{ sort_list[0] }}
+                option(v-for="n in 3") {{ sort_list[n] }}
     editor-menu-bar(:editor="editor" v-slot="{ commands, isActive }")
-      div.buttons
+      div.buttons(ref="aa")
         button.button(:class="{ 'is-active': isActive.bold() }" @click="commands.bold")
           span.icon
             font-awesome-icon(icon="bold")
@@ -14,7 +24,7 @@
         button.button(:class="{ 'is-active': isActive.strike() }" @click="commands.strike")
           span.icon
             font-awesome-icon(icon="strikethrough")
-        button.button(@click="showImagePropmpt(commands.image)")
+        button.button(@click="showImagePrompt(commands.image)")
           span.icon
             font-awesome-icon(icon="image")
         button.button(:class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list")
@@ -23,7 +33,7 @@
         button.button(:class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list")
           span.icon
             font-awesome-icon(icon="list-ol")
-    editor-content.content(:editor="editor")
+    editor-content.content.editor__content(:editor="editor")
 </template>
 
 <script lang="ts">
@@ -42,11 +52,18 @@ import {
 import { Command } from 'tiptap-commands';
 
 export default Vue.extend({
-  name: 'Editor',
-  components: { EditorContent, EditorMenuBar },
+  components: {
+    EditorContent, EditorMenuBar,
+  },
   data() {
     return {
+      title: '',
+      sort_list: ['자유게시판', '덱 리스트', '이벤트', '파밍'],
+      sort: '',
+      content: '',
+      tags: '',
       editor: new Editor({
+        autoFocus: true,
         extensions: [
           new Bold(),
           new Italic(),
@@ -57,12 +74,15 @@ export default Vue.extend({
           new BulletList(),
           new OrderedList(),
         ],
+        onUpdate: ({ getHTML }) => {
+          this.content = getHTML;
+        },
+        content: 'test',
       }),
-      content: null,
     };
   },
   methods: {
-    showImagePropmpt(command: Command) {
+    showImagePrompt(command: Command) {
       const src = prompt('이미지 URL을 입력해 주세요');
       if (src !== null) {
         command({ src });
@@ -72,33 +92,23 @@ export default Vue.extend({
   beforeDestroy() {
     this.editor.destroy();
   },
+  mounted() {
+    console.log(this.$refs.aa.offsetHeight);
+  },
 });
 </script>
 
-<style lang="scss" scoped>
-button {
-  border: none;
+<style lang="scss" >
+.button {
+  border: none !important;
 }
-
-//hr {
-//  display: block !important;
-//  margin: 0 !important;
-//  padding: 0 !important;
-//  box-sizing: border-box !important;
-//  font-size: 18px !important;
-//  color: #000 !important;
-//  line-height: 1.5 !important;
-//  background-color: #000 !important;
-//  caret-color: currentColor !important;
-//}
 
 .is-active {
-  background: hsl(0, 0, 86%);
+  background: hsl(0, 0, 86%) !important;
 }
 
-.content {
-  & > div {
-    height: 400px;
-  }
+.ProseMirror {
+  // 전체 높이 - navbar - input - input-margin - buttons - buttons-margin
+  min-height: calc(100vh - 3.25rem - 40px - 0.75rem - 48px - 1rem);
 }
 </style>

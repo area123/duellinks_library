@@ -1,8 +1,8 @@
-import { register, login, logout } from '@/api/auth';
 import { Module } from 'vuex';
 import { IRootState } from '@/store';
 import { User, UserResponse, UserForm, UserLoginForm } from '@/types/user';
 import { AxiosResponse, AxiosError } from 'axios';
+import { register, login, logout } from '@/api/auth';
 
 interface IUser {
   user: User | null;

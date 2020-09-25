@@ -1,20 +1,21 @@
 <template lang="pug">
   .column.card
     header.card-header
-      a(href="#").card-header-title.has-text-centered 공지사항
+      router-link(:to="{ name: 'postlist', params: { post: sort } }").card-header-title.has-text-centered.is-block {{ sort }}
     .card-content
       ul
-        li(v-for='n in 10') 제목
+        template(v-for="post in posts")
+          li
+            router-link.is-text(:to="{ name: 'post', params: { postId: post.id } }") {{ post.title }}
 </template>
 
 <script>
 export default {
   name: 'NoticeBoard',
+  props: ['sort', 'posts'],
 };
 </script>
 
 <style lang="scss" scoped>
-a {
-  display: block;
-}
+
 </style>
