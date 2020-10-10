@@ -1,21 +1,21 @@
 <template lang="pug">
-  section.hero.is-fullheight-with-navbar
+  section.hero.is-fullheight-with-navbar.has-background-black-bis
     .hero-body
       .container.has-text-centered
         .column.is-4.is-offset-4
-          .box
+          .box.has-background-black-ter
             form(@submit.prevent="onSubmit")
-              h3.title.has-text-black 로그인
+              h3.title.has-text-white 로그인
               .field
                 .control
-                  input.input.is-large.is-primary(v-model="email" type="email" placeholder="이메일을 입력해주세요")
+                  input.input.is-large.has-background-black-ter.has-text-light(v-model="email" type="email" placeholder="이메일을 입력해주세요")
               .field
                 .control
-                  input.input.is-large.is-primary(v-model="password" type="password" placeholder="비밀번호를 입력해주세요")
-              button.button.is-primary.is-large.is-fullwidth.is-outlined 로그인
-          p.has-text-primary
-            router-link(:to="{ name: 'register' }") 회원가입 &nbsp;·&nbsp;
-            a 비밀번호 찾기
+                  input.input.is-large.has-background-black-ter.has-text-light(v-model="password" type="password" placeholder="비밀번호를 입력해주세요")
+              button.button.is-large.is-fullwidth.is-outlined.is-white 로그인
+          p
+            router-link.has-text-yellow(:to="{ name: 'register' }") 회원가입 &nbsp;·&nbsp;
+            a.has-text-yellow 비밀번호 찾기
     Modal(:title="title" :body="body" :show-modal="showModal" v-on:close="onClose")
 </template>
 
@@ -35,18 +35,16 @@ export default Vue.extend({
     };
   },
   methods: {
-    onSubmit: async function() {
+    async onSubmit() {
       const data: UserLoginForm = {
         email: this.email,
         password: this.password,
       };
       await this.$store.dispatch('user/login', data);
-      if (this.$store.state['user'].user_error !== null) {
-        console.log(this.$store.state['user'].user_error);
+      if (this.$store.state.user.user === null) {
         this.showModal = !this.showModal;
         return;
       } else {
-        console.log(this.$store.state['user'].user_error);
         await this.$router.push({ name: 'home' });
       }
     },
@@ -58,6 +56,19 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+input {
+  &::placeholder {
+    color: hsl(0, 0%, 86%);
+  }
 
+  &:focus {
+    border-color: hsl(0, 0%, 86%);
+    box-shadow: inherit;
+  }
+}
+
+.has-text-yellow {
+  color: orange;
+}
 </style>

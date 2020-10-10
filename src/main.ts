@@ -12,10 +12,11 @@ import {
   faListUl,
   faListOl,
   faWindowMinimize,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faBold, faItalic, faUnderline, faStrikethrough, faImage, faListUl, faListOl, faWindowMinimize);
+library.add(faBold, faItalic, faUnderline, faStrikethrough, faImage, faListUl, faListOl, faWindowMinimize, faSpinner);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

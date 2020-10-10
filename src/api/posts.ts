@@ -1,11 +1,12 @@
 import axios, { AxiosPromise } from 'axios';
-import { Post } from '@/types/post';
+import { Post, PostForm } from '@/types/post';
 
-export const list = (): AxiosPromise<Post> => {
-  return axios.get('/api/posts');
+export const list = (page: number, sort: string | null): AxiosPromise<Post> => {
+  const url = `/api/posts?page=${page}&sort=${sort}`;
+  return axios.get(url);
 };
 
-export const write = (data: Post): AxiosPromise<Post> => {
+export const write = (data: PostForm): AxiosPromise<Post> => {
   return axios.post('/api/posts', data);
 };
 
@@ -17,6 +18,6 @@ export const remove = (id: number): AxiosPromise<Post> => {
   return axios.delete(`/api/posts/${id}`);
 };
 
-export const update = (id: number): AxiosPromise<Post> => {
-  return axios.patch(`/api/posts/${id}`);
+export const update = (id: number, data: PostForm): AxiosPromise<Post> => {
+  return axios.patch(`/api/posts/${id}`, data);
 };

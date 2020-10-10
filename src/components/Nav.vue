@@ -1,26 +1,23 @@
 <template lang="pug">
-  nav.navbar.is-light(role="navigation")
+  nav.navbar.has-background-black-ter.is-fixed-top.is-fixed-top-touch(role="navigation")
     .navbar-brand
-      router-link.navbar-item(:to="{ name: 'home' }") 듀링 도서관
+      router-link.navbar-item.has-text-white(:to="{ name: 'home' }") 커뮤니티
       .navbar-burger(@click="active = !active" :class="{ 'is-active': active} ")
         span(v-for="n in 3")
     .navbar-menu(:class="{ 'is-active': active }")
       .navbar-start
-        a.navbar-item 자유 게시판
-        a.navbar-item 듀얼킹달성 덱리스트
-        a.navbar-item 파밍 및 이벤트
-        a.navbar-item 카드 평가
+        router-link.navbar-item.has-text-light(:to="{ name: 'postlist', params: { post: item } }" v-for="item in sort") {{ item }}
       .navbar-end
         .buttons
           template(v-if="!isLogin")
-            router-link.button.is-primary.is-outlined(:to="{ name: 'register' }")
+            router-link.button.is-outlined.is-white(:to="{ name: 'register' }")
               strong 회원가입
-            router-link.button.is-primary.is-outlined(:to="{ name: 'login' }")
+            router-link.button.is-outlined.is-white(:to="{ name: 'login' }")
               strong 로그인
           template(v-else)
-            button.button.is-primary.is-outlined(@click="onClick")
+            button.button.is-outlined.is-white(@click="onClick")
               strong 로그아웃
-            router-link.button.is-primary.is-outlined(:to="{ name: 'writer' }")
+            router-link.button.is-outlined.is-white(:to="{ name: 'write' }")
               strong 글쓰기
 </template>
 
@@ -32,16 +29,18 @@ export default Vue.extend({
   data() {
     return {
       active: false,
+      sort: ['자유게시판', '공지사항', '게임', '콘솔'],
     };
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.user.user !== null;
+    },
   },
   methods: {
     onClick() {
       this.$store.dispatch('user/logout');
-    },
-  },
-  computed: {
-    isLogin() {
-      return this.$store.state['user'].user !== null;
+      this.isLogin = false;
     },
   },
 });
@@ -57,5 +56,24 @@ export default Vue.extend({
 
 .buttons {
   margin-right: 0.5rem;
+}
+
+.navbar-item {
+  &:hover {
+    background: hsl(0, 0%, 21%);
+  }
+
+  &:focus {
+    background: hsl(0, 0%, 21%);
+  }
+}
+
+.is-active {
+  &.navbar-menu {
+    background: hsl(0, 0%, 14%) !important;
+  }
+  &.navbar-burger {
+    background: hsl(0, 0%, 14%) !important;
+  }
 }
 </style>

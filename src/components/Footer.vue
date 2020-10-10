@@ -1,7 +1,7 @@
 <template lang="pug">
-  footer.footer
-    .content.has-text-centered
-      p <strong>듀링 도서관</strong>
+  footer.footer.has-background-black-ter
+    .content.has-text-centered.has-text-light
+      p <strong>커뮤니티</strong>
       | Copyright&copy; 2020<br/>
       | All Rights Reserved
 </template>
@@ -10,10 +10,12 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-
-})
+  name: 'Footer',
+});
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.has-text-light > p > strong {
+  color: white;
+}
 </style>

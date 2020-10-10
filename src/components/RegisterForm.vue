@@ -1,42 +1,43 @@
 <template lang="pug">
-  section.hero.is-fullheight-with-navbar
+  section.hero.is-fullheight-with-navbar.has-background-black-bis
     .hero-body
       .container.has-text-centered
         .column.is-8.is-offset-2
-          .box
+          .box.has-background-black-ter
             ValidationObserver(ref="observer" v-slot="{ invalid }" tag="form" v-on:submit.prevent="onSubmit")
-              h3.title.has-text-black.has-text-centered 회원가입
+              h3.title.has-text-white.has-text-centered 회원가입
               .field.is-horizontal
                 .field-label.is-normal
-                  label.label 이메일
+                  label.label.has-text-light 이메일
                 .field-body
                   .field
                     p.control
                       ValidationProvider(name="email" rules="required|email")
                         div(slot-scope="{ errors }")
-                          input.input.is-primary(v-model="email" type="email" placeholder="이메일을 입력해주세요" required)
+                          input.input.has-background-black-ter.has-text-light(v-model="email" type="email" placeholder="이메일을 입력해주세요" required)
                           Message(:body="errors[0]")
               .field.is-horizontal
                 .field-label.is-normal
-                  label.label 비밀번호
+                  label.label.has-text-light 비밀번호
                 .field-body
                   .field
                     p.control
                       ValidationProvider(name="password" :rules="{ required:'required', password: /(?=.*\d)(?=.*[a-z]).{8,}/ }")
                         div(slot-scope="{ errors }")
-                          input.input.is-primary(v-model="password" type="password" placeholder="비밀번호를 입력해주세요" required)
+                          input.input.has-background-black-ter.has-text-light(v-model="password" type="password" placeholder="비밀번호를 입력해주세요" required)
                           Message(:body="errors[0]")
               .field.is-horizontal
                 .field-label.is-normal
-                  label.label 닉네임
+                  label.label.has-text-light 닉네임
                 .field-body
                   .field
                     p.control
                       ValidationProvider(name="nickname" rules="min:2|max:10")
                         div(slot-scope="{ errors }")
-                          input.input.is-primary(v-model="nickname" type="text" placeholder="닉네임을 입력해주세요" required)
+                          input.input.has-background-black-ter.has-text-light(v-model="nickname" type="text" placeholder="닉네임을 입력해주세요" required)
                           Message(:body="errors[0]")
-              button.button.is-primary.is-large.is-fullwidth.is-outlined 회원가입
+              button.button.is-large.is-fullwidth.is-outlined.is-white 회원가입
+    Modal(:title="title" :body="body" :show-modal="showModal" v-on:close="onClose")
 </template>
 
 <script lang="ts">
@@ -79,11 +80,15 @@ export default Vue.extend({
       email: '',
       password: '',
       nickname: '',
+      title: '회원가입 오류',
+      body: '이미 같은 이메일이 존재합니다.',
+      showModal: false,
     };
   },
   methods: {
-    onSubmit: async function() {
-      const isValid = await this.$refs.observer.validate();
+    async onSubmit() {
+      const observer = await this.$refs.observer as HTMLFormElement;
+      const isValid = observer.validate();
       if (!isValid) {
         return;
       }
@@ -93,14 +98,28 @@ export default Vue.extend({
         nickname: this.nickname,
       };
       await this.$store.dispatch('user/register', data);
-      if (this.$store.state['user'].user !== null) {
+      if (this.$store.state.user.user !== null) {
         await this.$router.push({ name: 'home' });
+      } else {
+        this.showModal = !this.showModal;
       }
+    },
+    onClose() {
+      this.showModal = !this.showModal;
     },
   },
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+input {
+  &::placeholder {
+    color: hsl(0, 0%, 86%);
+  }
 
+  &:focus {
+    border-color: hsl(0, 0%, 86%);
+    box-shadow: inherit;
+  }
+}
 </style>

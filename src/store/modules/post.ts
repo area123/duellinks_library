@@ -1,32 +1,40 @@
 import { Module } from 'vuex';
-import { IRootState } from '@/store';
-import { Post } from '@/types/post';
+import { Post, PostForm } from '@/types/post';
 import { AxiosResponse, AxiosError } from 'axios';
 import * as postsAPI from '@/api/posts';
 
 interface IPost {
-  post: Post[] | null;
+  posts: Post[] | null;
+  post: Post | null;
   post_error: AxiosError | null;
+  current_page: number | null;
+  last_page: number | null;
 }
 
-const post: Module<IPost, IRootState> = {
+// @ts-ignore
+const post: Module<IPost, any> = {
   namespaced: true,
   state: {
+    posts: null,
     post: null,
     post_error: null,
+    current_page: null,
+    last_page: null,
   },
   getters: {},
   actions: {
-    async list({ commit }) {
+    async list({ commit }, payload) {
       try {
-        const postResponse: AxiosResponse<Post> = await postsAPI.list();
-        commit('set_post', postResponse.data);
+        const postsResponse: AxiosResponse<Post> = await postsAPI.list(payload.page, payload.sort);
+        commit('set_posts', postsResponse.data);
+        commit('set_current_page', parseInt(postsResponse.headers['current-page'], 10));
+        commit('set_last_page', parseInt(postsResponse.headers['last-page'], 10));
       } catch (e) {
         const response = (e as AxiosError).response;
         commit('set_post_error', response);
       }
     },
-    async write({ commit }, data: Post) {
+    async write({ commit }, data: PostForm) {
       try {
         await postsAPI.write(data);
       } catch (e) {
@@ -36,7 +44,8 @@ const post: Module<IPost, IRootState> = {
     },
     async read({ commit }, id: number) {
       try {
-        await postsAPI.read(id);
+        const postResponse: AxiosResponse<Post> = await postsAPI.read(id);
+        commit('set_post', postResponse.data);
       } catch (e) {
         const response = (e as AxiosError).response;
         commit('set_post_error', response);
@@ -50,9 +59,10 @@ const post: Module<IPost, IRootState> = {
         commit('set_post_error', response);
       }
     },
-    async update({ commit }, id: number) {
+    // @ts-ignore
+    async update({ commit }, payload) {
       try {
-        await postsAPI.update(id);
+        await postsAPI.update(payload.id, payload.data);
       } catch (e) {
         const response = (e as AxiosError).response;
         commit('set_post_error', response);
@@ -60,11 +70,21 @@ const post: Module<IPost, IRootState> = {
     },
   },
   mutations: {
-    set_post(state, data: Post[] | null) {
-      state.post = data;
+    set_posts(state, data: Post[] | null) {
+      state.posts = data;
     },
+    set_post(state, data: Post | null) {
+      state.post = data;
+    }
+    ,
     set_post_error(state, data: AxiosError | null) {
       state.post_error = data;
+    },
+    set_current_page(state, page: number) {
+      state.current_page = page;
+    },
+    set_last_page(state, page: number) {
+      state.last_page = page;
     },
   },
 };

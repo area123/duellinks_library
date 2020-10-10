@@ -1,6 +1,5 @@
 import { Module } from 'vuex';
-import { IRootState } from '@/store';
-import { User, UserResponse, UserForm, UserLoginForm } from '@/types/user';
+import { User, UserForm, UserLoginForm } from '@/types/user';
 import { AxiosResponse, AxiosError } from 'axios';
 import { register, login, logout } from '@/api/auth';
 
@@ -9,18 +8,22 @@ interface IUser {
   user_error: AxiosError | null;
 }
 
-const user: Module<IUser, IRootState> = {
+const user: Module<IUser, any> = {
   namespaced: true,
   state: {
     user: null,
     user_error: null,
   },
-  getters: {},
+  getters: {
+    isLogin: (state): boolean => {
+      return state.user !== null;
+    },
+  },
   actions: {
     async register({ commit }, data: UserForm) {
       try {
-        const userResponse: AxiosResponse<UserResponse> = await register(data);
-        commit('set_user', userResponse.data.data);
+        const userResponse: AxiosResponse<User> = await register(data);
+        commit('set_user', userResponse.data);
       } catch (e) {
         const response = (e as AxiosError).response;
         commit('set_user_error', response);
@@ -28,8 +31,8 @@ const user: Module<IUser, IRootState> = {
     },
     async login({ commit }, data: UserLoginForm) {
       try {
-        const userResponse: AxiosResponse<UserResponse> = await login(data);
-        commit('set_user', userResponse.data.data);
+        const userResponse: AxiosResponse<User> = await login(data);
+        commit('set_user', userResponse.data);
       } catch (e) {
         const response = (e as AxiosError).response;
         commit('set_user_error', response);

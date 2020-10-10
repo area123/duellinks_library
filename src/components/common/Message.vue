@@ -11,7 +11,7 @@ export default Vue.extend({
   props: ['body'],
   computed: {
     show() {
-      return this.$props.body !== undefined;
+      return this.body !== undefined;
     },
   },
 });
