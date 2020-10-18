@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { Comment, CommentRequest, CommentResponse } from '@/types/comment';
+import { CommentRequest, CommentResponse } from '@/types/comment';
 import * as commentsAPI from '@/api/comments';
 
 interface IComment {
@@ -25,9 +25,10 @@ const comment: Module<IComment, any> = {
       });
     },
     write({ commit, state }, data: CommentRequest) {
-      commentsAPI.write(data).then((res) => {
-        const concat = state.comments!.concat(res.data);
-        commit('set_comments', concat);
+      commentsAPI.write(data).then(() => {
+        commentsAPI.list(data.postId).then((res) => {
+          commit('set_comments', res.data);
+        });
       });
     },
     remove({ commit, state }, id: number) {

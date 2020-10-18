@@ -1,12 +1,10 @@
 <template lang="pug">
-  div
-    Nav
-    LoginForm
+  LoginForm
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import LoginForm from '@/components/LoginForm.vue';
 
 export default Vue.extend({

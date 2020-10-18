@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { Post, PostForm } from '@/types/post';
+import { Post, PostResponse } from '@/types/post';
 import { AxiosResponse, AxiosError } from 'axios';
 import * as postsAPI from '@/api/posts';
 
@@ -25,7 +25,7 @@ const post: Module<IPost, any> = {
   actions: {
     async list({ commit }, payload) {
       try {
-        const postsResponse: AxiosResponse<Post> = await postsAPI.list(payload.page, payload.sort);
+        const postsResponse: AxiosResponse<PostResponse> = await postsAPI.list(payload.page, payload.sort);
         commit('set_posts', postsResponse.data);
         commit('set_current_page', parseInt(postsResponse.headers['current-page'], 10));
         commit('set_last_page', parseInt(postsResponse.headers['last-page'], 10));
@@ -34,7 +34,7 @@ const post: Module<IPost, any> = {
         commit('set_post_error', response);
       }
     },
-    async write({ commit }, data: PostForm) {
+    async write({ commit }, data: Post) {
       try {
         await postsAPI.write(data);
       } catch (e) {
@@ -44,7 +44,7 @@ const post: Module<IPost, any> = {
     },
     async read({ commit }, id: number) {
       try {
-        const postResponse: AxiosResponse<Post> = await postsAPI.read(id);
+        const postResponse: AxiosResponse<PostResponse> = await postsAPI.read(id);
         commit('set_post', postResponse.data);
       } catch (e) {
         const response = (e as AxiosError).response;

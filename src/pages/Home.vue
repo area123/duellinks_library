@@ -1,6 +1,5 @@
 <template lang="pug">
   div.has-background-black-bis
-    Nav
     .container.mb-6.pt-6.is-fullheight-with-navbar
       .columns
         NoticeBoard(sort="자유게시판" :posts="title('자유게시판')" :loading="loading")
@@ -14,7 +13,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import NoticeBoard from '@/components/NoticeBoard.vue';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import Footer from '@/components/Footer.vue';
 import { Post } from '@/types/post';
 

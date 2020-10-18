@@ -1,12 +1,10 @@
 <template lang="pug">
-  div
-    Nav
-    RegisterForm
+  RegisterForm
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import RegisterForm from '@/components/RegisterForm.vue';
 
 

@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { User, UserForm, UserLoginForm } from '@/types/user';
+import { User, UserRequest, UserResponse } from '@/types/user';
 import { AxiosResponse, AxiosError } from 'axios';
 import { register, login, logout } from '@/api/auth';
 
@@ -20,18 +20,18 @@ const user: Module<IUser, any> = {
     },
   },
   actions: {
-    async register({ commit }, data: UserForm) {
+    async register({ commit }, data: UserRequest) {
       try {
-        const userResponse: AxiosResponse<User> = await register(data);
+        const userResponse: AxiosResponse<UserResponse> = await register(data);
         commit('set_user', userResponse.data);
       } catch (e) {
         const response = (e as AxiosError).response;
         commit('set_user_error', response);
       }
     },
-    async login({ commit }, data: UserLoginForm) {
+    async login({ commit }, data: User) {
       try {
-        const userResponse: AxiosResponse<User> = await login(data);
+        const userResponse: AxiosResponse<UserResponse> = await login(data);
         commit('set_user', userResponse.data);
       } catch (e) {
         const response = (e as AxiosError).response;
@@ -44,7 +44,7 @@ const user: Module<IUser, any> = {
     },
   },
   mutations: {
-    set_user(state, data: User | null) {
+    set_user(state, data: UserResponse | null) {
       state.user = data;
     },
     set_user_error(state, data: AxiosError | null) {

@@ -1,6 +1,5 @@
 <template lang="pug">
   div.has-background-black-bis
-    Nav
     .container.mb-6.pt-6.is-fullheight-with-navbar
       h1.title.has-text-centered.has-text-white {{ sort }}
       PostTable(:posts="posts" :title="sort")
@@ -10,7 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import PostTable from '@/components/PostTable.vue';
 import Pagination from '@/components/Pagination.vue';
 import Footer from '@/components/Footer.vue';

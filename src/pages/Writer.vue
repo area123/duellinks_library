@@ -1,12 +1,10 @@
 <template lang="pug">
-  div
-    Nav
-    Editor
+  Editor
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import Editor from '@/components/Editor.vue';
 
 export default Vue.extend({

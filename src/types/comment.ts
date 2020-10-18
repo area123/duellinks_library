@@ -4,6 +4,7 @@ import { User } from '@/types/user';
 export interface Comment {
   content: string;
   parent: number | null;
+  seq: null | number;
 }
 
 export interface CommentRequest extends Comment {

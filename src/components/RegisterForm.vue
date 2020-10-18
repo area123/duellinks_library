@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { UserForm } from '@/types/user';
+import { UserRequest } from '@/types/user';
 import { extend, ValidationProvider, ValidationObserver } from 'vee-validate';
 import { required, email, regex, min, max } from 'vee-validate/dist/rules';
 import Message from '@/components/common/Message.vue';
@@ -92,7 +92,7 @@ export default Vue.extend({
       if (!isValid) {
         return;
       }
-      const data: UserForm = {
+      const data: UserRequest = {
         email: this.email,
         password: this.password,
         nickname: this.nickname,

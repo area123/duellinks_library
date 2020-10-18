@@ -1,11 +1,11 @@
 import axios, { AxiosPromise } from 'axios';
-import { UserLoginForm, UserForm, User } from '@/types/user';
+import { User, UserRequest, UserResponse } from '@/types/user';
 
-export const register = (data: UserForm): AxiosPromise<User> => {
+export const register = (data: UserRequest): AxiosPromise<UserResponse> => {
   return axios.post('/api/auth/register', data);
 };
 
-export const login = (data: UserLoginForm): AxiosPromise<User> => {
+export const login = (data: User): AxiosPromise<UserResponse> => {
   return axios.post('/api/auth/login', data);
 };
 

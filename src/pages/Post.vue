@@ -1,6 +1,5 @@
 <template lang="pug">
   div.has-background-black-bis
-    Nav
     .container.mb-6.pt-6.is-fullheight-with-navbar
       template(v-if="loading")
         span.icon.is-large
@@ -16,7 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import PostCard from '@/components/PostCard.vue';
 import PostTable from '@/components/PostTable.vue';
 import Pagination from '@/components/Pagination.vue';
@@ -46,7 +45,7 @@ export default Vue.extend({
       if (this.$store.state.user.user === null) {
         return false;
       }
-      const post = this.$store.getters['post/post'](this.$route.params.postId)[0];
+      const post = this.$store.state.post.post;
       return this.$store.state.user.user.id === post.user.id;
     },
     isComments() {

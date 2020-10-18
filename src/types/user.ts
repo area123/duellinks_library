@@ -1,21 +1,13 @@
 export interface User {
+  email: string;
+  password?: string;
+}
+
+export interface UserRequest extends User {
+  nickname: string;
+}
+
+export interface UserResponse extends User {
   id: number;
-  email: string;
-  nickname: string;
-  createdAt: string;
-}
-
-export interface UserResponse {
-  data: User;
-}
-
-export interface UserForm {
-  email: string;
-  password: string;
-  nickname: string;
-}
-
-export interface UserLoginForm {
-  email: string;
-  password: string;
+  createdAt: Date;
 }

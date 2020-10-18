@@ -1,15 +1,17 @@
 <template lang="pug">
   .box.mb-0.has-background-black-ter
     .content
-      p.has-text-light
+      p.has-text-light(:style="{marginLeft:comment.seq - 1 +'rem'}")
         strong {{ comment.user.nickname }}
         small  {{ createdAt(comment.createdAt) }}
+        a(@click="onWrite()")  댓글 달기
         template(v-if="isWriter")
           a(@click="onUpdate()")  변경
           a(@click="onRemove()")  삭제
         br
         | {{ comment.content }}
-    CommentForm(v-if="isUpdate" title="댓글 변경" button="변경하기" :update="true" :id="comment.id" v-on:change="onChange()")
+    CommentForm(v-if="isUpdate" title="댓글 변경" button="변경하기" :update="true" :id="comment.id" v-on:change="onChange()" :comment="comment")
+    CommentForm(v-if="isCommenter" title="댓글 달기" button="댓글 작성" :comment="comment" v-on:write="onCommenter()")
 </template>
 
 <script lang="ts">
@@ -23,6 +25,7 @@ export default Vue.extend({
   data() {
     return {
       isUpdate: false,
+      isCommenter: false,
     };
   },
   props: ['comment'],
@@ -40,13 +43,19 @@ export default Vue.extend({
       return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
     },
     onUpdate() {
-      this.isUpdate = true;
+      this.isUpdate = !this.isUpdate;
     },
     onRemove() {
       this.$store.dispatch('comment/remove', this.$props.comment.id);
     },
     onChange() {
       this.isUpdate = false;
+    },
+    onWrite() {
+      this.isCommenter = !this.isCommenter;
+    },
+    onCommenter() {
+      this.isCommenter = !this.isCommenter;
     },
   },
 });

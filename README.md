@@ -1,24 +1,19 @@
-# duellinks_library
+# 커뮤니티
 
-## Project setup
+## 백엔드 주소
+[github](https://github.com/area123/duellinks_library_backend)
+
+## 설치
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+## 실행
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+## 빌드
 ```
 yarn build
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import VueRouter from 'vue-router';
 import Vuex, { Module } from 'vuex';
-import Nav from '@/components/Nav.vue';
+import Nav from '@/components/common/Nav.vue';
 import { User } from '@/types/user';
 
 const localVue = createLocalVue();

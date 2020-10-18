@@ -26,21 +26,16 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Nav',
+  props:['isLogin'],
   data() {
     return {
       active: false,
       sort: ['자유게시판', '공지사항', '게임', '콘솔'],
     };
   },
-  computed: {
-    isLogin() {
-      return this.$store.state.user.user !== null;
-    },
-  },
   methods: {
     onClick() {
       this.$store.dispatch('user/logout');
-      this.isLogin = false;
     },
   },
 });

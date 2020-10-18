@@ -7,7 +7,7 @@
           input.input.has-background-black-ter.has-text-light(v-model="content" type="text" placeholder="댓글을 입력해주세요")
       .field
         .control
-          button.button.is-white(@click="onClick") {{ button }}
+          button.button.is-white(@click="onClick()") {{ button }}
     template(v-else)
       .notification
         | 로그인하지 않으면 댓글을 작성할수 없습니다.
@@ -19,7 +19,7 @@ import { CommentRequest } from '@/types/comment';
 
 export default Vue.extend({
   name: 'CommentForm',
-  props: ['title', 'update', 'button', 'id'],
+  props: ['title', 'update', 'button', 'id', 'comment'],
   data() {
     return {
       content: '',
@@ -27,7 +27,7 @@ export default Vue.extend({
   },
   computed: {
     isLogin() {
-      return this.$store.getters['user/isLogin'];
+      return this.$store.state.user.user !== null;
     },
   },
   methods: {
@@ -35,7 +35,8 @@ export default Vue.extend({
       if (this.$props.update) {
         const comment: CommentRequest = {
           content: this.$data.content,
-          parent: null,
+          parent: this.$props.comment.parent,
+          seq: this.$props.comment.seq,
           postId: this.$store.state.post.post.id,
         };
         const payload = {
@@ -45,10 +46,21 @@ export default Vue.extend({
         this.$store.dispatch('comment/update', payload).then(() => {
           this.$emit('change');
         });
+      } else if (this.$props.comment) {
+        const comment: CommentRequest = {
+          content: this.$data.content,
+          parent: this.$props.comment.id,
+          seq: this.$props.comment.seq + 1,
+          postId: this.$store.state.post.post.id,
+        };
+        this.$store.dispatch('comment/write', comment).then(() => {
+          this.$emit('write');
+        });
       } else {
         const comment: CommentRequest = {
           content: this.$data.content,
           parent: null,
+          seq: 1,
           postId: this.$store.state.post.post.id,
         };
         this.$store.dispatch('comment/write', comment);
